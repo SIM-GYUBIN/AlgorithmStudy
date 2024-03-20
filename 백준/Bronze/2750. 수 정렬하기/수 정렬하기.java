@@ -14,20 +14,20 @@ public class Main {
             arr[i] = Integer.parseInt(br.readLine());
         }
 
-//        Arrays.sort(arr);
+        Arrays.sort(arr);
 
         //버블 정렬
-        for (int i = 0; i < turn-1; i++) {  //회차
-            for (int j = 0; j < turn-1-i; j++) {    //뒤에 정렬된 부분 빼고 나머지 앞부분 정렬
-                int temp;
-                if (arr[j] > arr[j+1]) {
-                    temp = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = temp;
-                }
-            }
-        }
-
+//        for (int i = 0; i < turn-1; i++) {  //회차
+//            for (int j = 0; j < turn-1-i; j++) {    //뒤에 정렬된 부분 빼고 나머지 앞부분 정렬
+//                int temp;
+//                if (arr[j] > arr[j+1]) {
+//                    temp = arr[j];
+//                    arr[j] = arr[j+1];
+//                    arr[j+1] = temp;
+//                }
+//            }
+//        }
+//
         for (int i : arr) {
             System.out.println(i);
         }
