@@ -7,7 +7,7 @@ public class Main {
     static int N;
     static int[][] map;
     static boolean[][] isVisited;
-    static boolean[][] isSinked;
+//    static boolean[][] isSinked;
     static int maxCount;
     static int[][] directionArr = {{-1, 0},{1,0},{0,-1},{0,1}};
 
@@ -28,18 +28,20 @@ public class Main {
         //높이 증가 (한 턴) (height = 비)  ** 0부터!! 비 안올 수 도 있음!!!
         for (int height = 0; height < 101; height++) {    //입력값받을 때 제일 높은 높이 구별하는 것보다 높이 100까지니까 이게 나을듯
             int cntTurn = 0;
-            isSinked = new boolean[N][N];
+//            isSinked = new boolean[N][N];
             isVisited = new boolean[N][N];
             for (int i = 0; i < N; i++) {   //잠긴 지역 맵 세팅
                 for (int j = 0; j < N; j++) {
                     if (map[i][j] <= height)
-                        isSinked[i][j] = true;
+                        isVisited[i][j] = true;
+//                        isSinked[i][j] = true;
                 }
             }
 
             for (int i = 0; i < N; i++) {   //순회
                 for (int j = 0; j < N; j++) {
-                    if (!isSinked[i][j] && !isVisited[i][j]) {
+//                    if (!isSinked[i][j] && !isVisited[i][j]) {
+                    if (!isVisited[i][j]) {
                         cntTurn++;
                         dfs(i,j);
                     }
@@ -55,7 +57,8 @@ public class Main {
     }
 
     private static void dfs(int x, int y) {
-        if (isSinked[x][y] || isVisited[x][y]) {    //방문한 적 있거나 잠긴 곳이면 pass
+//        if (isSinked[x][y] || isVisited[x][y]) {    //방문한 적 있거나 잠긴 곳이면 pass
+        if (isVisited[x][y]) {    //방문한 적 있거나 잠긴 곳이면 pass
             return;
         }
         isVisited[x][y] = true;
@@ -81,4 +84,3 @@ public class Main {
 
     }
 }
-//isSinked 하나만 있어도 될 것 같은데 해보기
