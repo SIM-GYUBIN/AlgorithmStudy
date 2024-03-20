@@ -9,7 +9,7 @@ public class Main {
     static boolean[][] isVisited;   //잠긴 곳과 방문한 곳 저장하는 배열
 //    static boolean[][] isSinked;  // <- 굳이 필요 없음
     static int maxCount;
-    static int[][] directionArr = {{-1, 0},{1,0},{0,-1},{0,1}};
+    static int[][] directionArr = {{-1, 0},{1,0},{0,-1},{0,1}}; //상 하 좌 우
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -72,7 +72,7 @@ public class Main {
 
     }
 
-    private static int validNumInRange(int num) {
+    private static int validNumInRange(int num) {    //다음 노드가 배열을 벗어나지 않는지
         if (num < 0)
             num = 0;
         else if (num > N-1)
