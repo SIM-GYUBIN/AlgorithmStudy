@@ -75,20 +75,6 @@ class Main {
 
       int sum = 0;
 
-//      int[] toV = dijkstraFindV(1, v1, v2);
-//
-//      sum += toV[0];
-//      if (toV[1] == -1) { //경로 없음
-//         nono = true;
-//      } else if (toV[1] == 1) {  //v1에 먼저 도착
-//         sum += dijkstra(v1, v2);
-//         sum += dijkstra(v2, N);
-//
-//      } else if (toV[1] == 2) {  //v2에 먼저 도착
-//         sum += dijkstra(v2, v1);
-//         sum += dijkstra(v1, N);
-//      }
-
       int v1Tov2 = dijkstra(v1, v2);
       int n1 = dijkstra(1, v1) + v1Tov2 + dijkstra(v2, N);
       int n2 = dijkstra(1, v2) + v1Tov2 + dijkstra(v1, N);
@@ -130,44 +116,5 @@ class Main {
          nono = true;
       }
       return res[end];
-   }
-
-   //v1에 도착할지 v2에 도착할지 몰라서 만든 함수
-   private static int[] dijkstraFindV(int start, int v1, int v2) {
-      PriorityQueue<Node> myQ = new PriorityQueue<>();
-      int[] res = new int[N+1];
-      Arrays.fill(res, Integer.MAX_VALUE);
-      boolean[] visit = new boolean[N+1];
-
-      res[start] = 0;
-      myQ.offer(new Node(start, 0));
-
-      while (!myQ.isEmpty()) {
-         Node nowNode = myQ.poll();
-
-         if (visit[nowNode.next]) {
-            continue;
-         }
-         visit[nowNode.next] = true;
-
-         for (Node nextNode: list.get(nowNode.next)) {
-            if (res[nextNode.next] > res[nowNode.next] + nextNode.cost) {
-               res[nextNode.next] = res[nowNode.next] + nextNode.cost;
-               myQ.offer(new Node(nextNode.next, res[nextNode.next]));
-            }
-         }
-      }
-
-      if (res[v1] > res[v2]) {   //v2가 가까우면
-         return new int[]{res[v2], 2};
-      } else if (res[v1] < res[v2]) { //v1가 가까우면
-         return new int[]{res[v1], 1};
-      } else {
-         if (res[v1]==Integer.MAX_VALUE && res[v2]==Integer.MAX_VALUE) {   //길 없음
-            return new int[]{0, -1};
-         }
-         //그냥 둘이 같을 때 (v1을 넘기던 v2를 넘기던 상관x)
-         return new int[]{res[v1], 1};
-      }
    }
 }
