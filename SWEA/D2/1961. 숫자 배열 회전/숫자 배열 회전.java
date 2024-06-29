@@ -2,29 +2,36 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Solution {
-    static int T;
+class Solution {
     static int N;
     static int[][] arr;
-    static int[][] arr90;
-    static int[][] arr180;
-    static int[][] arr270;
+    static public class Node {
+        int x;
+        int y;
 
+        public Node(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
     public static void main(String[] args) throws Exception {
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-        T = Integer.parseInt(br.readLine());
+        int T = Integer.parseInt(br.readLine());
+        for (int caseNum = 1; caseNum <= T; caseNum++) {
+            sb.append("#").append(caseNum).append("\n");
 
-        for (int caseNum = 1; caseNum < T+1; caseNum++) {
-            N = Integer.parseInt(br.readLine());
+            StringTokenizer st = new StringTokenizer(br.readLine());
+
+            N = Integer.parseInt(st.nextToken());
+
             arr = new int[N][N];
-            arr90 = new int[N][N];
-            arr180 = new int[N][N];
-            arr270 = new int[N][N];
+            int[][] arr90 = new int[N][N];
+            int[][] arr180 = new int[N][N];
+            int[][] arr270 = new int[N][N];
 
             for (int i = 0; i < N; i++) {
-                StringTokenizer st = new StringTokenizer(br.readLine());
+                st = new StringTokenizer(br.readLine());
                 for (int j = 0; j < N; j++) {
                     arr[i][j] = Integer.parseInt(st.nextToken());
                 }
@@ -48,9 +55,6 @@ public class Solution {
                 }
             }
 
-            sb.append("#").append(caseNum).append("\n");
-
-
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
                     sb.append(arr90[i][j]);
@@ -66,6 +70,7 @@ public class Solution {
                 sb.append("\n");
             }
         }
-        System.out.println(sb);
+        System.out.print(sb);
     }
+
 }
