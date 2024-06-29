@@ -2,65 +2,60 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Solution {
-    static int T;
-    static int N;
-
+class Solution {
+    static int N, M;
 
     public static void main(String[] args) throws Exception {
-        StringBuilder sb = new StringBuilder();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        T = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        int T = Integer.parseInt(br.readLine());
+        for (int caseNum = 1; caseNum <= T; caseNum++) {
+            sb.append("#").append(caseNum).append(" ");
 
-        for (int caseNum = 1; caseNum < T+1; caseNum++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
 
-            int N = Integer.parseInt(st.nextToken());
-            int M = Integer.parseInt(st.nextToken());
+            N = Integer.parseInt(st.nextToken());
+            int[] A = new int[N];
 
-            int[] smallArr = new int[N];
-            int[] bigArr = new int[M];
+            M = Integer.parseInt(st.nextToken());
+            int[] B = new int[M];
 
             st = new StringTokenizer(br.readLine());
             for (int i = 0; i < N; i++) {
-                smallArr[i] = Integer.parseInt(st.nextToken());
+                A[i] = Integer.parseInt(st.nextToken());
             }
+
             st = new StringTokenizer(br.readLine());
             for (int i = 0; i < M; i++) {
-                bigArr[i] = Integer.parseInt(st.nextToken());
+                B[i] = Integer.parseInt(st.nextToken());
             }
-
-            if (N > M) {
-                int[] tmp = smallArr;
-                smallArr = bigArr;
-                bigArr = tmp;
-            }
-
-            /**
-             * logic
-             */
 
             int result = 0;
-            int sp = 0;
-            int ep = smallArr.length-1;
-
-            while(ep <= bigArr.length-1) {
-
-                int j = 0;
-                int sum = 0;
-                for (int i = sp; i <= ep; i++) {
-                    sum += smallArr[j] * bigArr[i];
-                    j++;
-                }
-
-                result = Math.max(result, sum);
-
-                //다음 턴
-                sp++;
-                ep++;
+            if (N > M) {
+                result = solve(A, B);
+            } else if (N <= M) {
+                result = solve(B, A);
             }
-            sb.append("#").append(caseNum).append(" ").append(result).append("\n");
+
+            sb.append(result).append("\n");
         }
         System.out.print(sb);
     }
+
+    private static int solve(int[] longArr, int[] shortArr) {
+
+        int maxSum = 0;
+        for (int longStartIdx = 0; longStartIdx < longArr.length - shortArr.length + 1; longStartIdx++) {
+            int sum = 0;
+            int longIdx = longStartIdx;
+            for (int shortIdx = 0; shortIdx < shortArr.length; shortIdx++) {
+                sum += longArr[longIdx] * shortArr[shortIdx];
+                longIdx++;
+            }
+            maxSum = Math.max(maxSum, sum);
+        }
+
+        return maxSum;
+    }
+
 }
