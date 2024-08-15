@@ -40,7 +40,6 @@ public class Main {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < W; j++) {
                 int num = Integer.parseInt(st.nextToken());
-                if(num==1) num=-1;  //1대신 -1을 벽으로
                 arr[i][j] = num;
             }
         }
@@ -54,11 +53,12 @@ public class Main {
         int[][] visitK = new int[H][W];
         Queue<Node> myQ = new LinkedList<>();
         myQ.offer(new Node(stX, stY,0 , K));
-        visitK[0][0] = K;
 
         for (int[] arr : visitK) {
             Arrays.fill(arr, -1);
         }
+
+        visitK[0][0] = Integer.MAX_VALUE; //0,0 방문 막기
 
         while (!myQ.isEmpty()) {
             Node node = myQ.poll();
@@ -76,12 +76,12 @@ public class Main {
                 int nextX = nowX + dirArr[i][0];
                 int nextY = nowY + dirArr[i][1];
 
-                if (i>3 && K<=0) break;
+                if (i>3 && K<=0) break; //말 처럼 점프할 수 없는 경우
 
                 if (canGO(nextX, nextY) && arr[nextX][nextY] == 0) {
                     //말 처럼 움직이는 경우
                     if (i > 3) {
-                        if (nowK <=0 || visitK[nextX][nextY] >= nowK -1) {
+                        if (visitK[nextX][nextY] >= nowK -1) {  //방문하려는 곳이 더 큰 K를 가지고 방문했거나, 같은 K를 가지고 방문했다면
                             continue;
                         }
                         visitK[nextX][nextY] = nowK - 1;
@@ -89,7 +89,7 @@ public class Main {
                     }
                     //원숭이처럼 움직이는 경우
                     else {
-                        if (visitK[nextX][nextY] >= nowK) {
+                        if (visitK[nextX][nextY] >= nowK) { //방문하려는 곳이 더 큰 K를 가지고 방문했거나, 같은 K를 가지고 방문했다면
                             continue;
                         }
                         visitK[nextX][nextY] = nowK;
@@ -101,6 +101,6 @@ public class Main {
     }
 
     private static boolean canGO(int x, int y) {
-        return 0<=x && x<H && 0<=y && y<W && !(x==0 && y==0);
+        return 0<=x && x<H && 0<=y && y<W;
     }
 }
