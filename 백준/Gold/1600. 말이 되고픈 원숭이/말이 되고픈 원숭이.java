@@ -10,19 +10,19 @@ public class Main {
     static int K,W,H,result;
     static int[][] arr;
 
-    static int[][] dirArr = {{-1,0},{1,0},{0,-1},{0,1}
-            ,{-1,-2},{-2,-1},{-2,1},{-1,2}
-            ,{1,-2},{2,-1},{2,1},{1,2}};
+    static int[][] dirArr = {{-1,0},{1,0},{0,-1},{0,1}  //상하좌우
+            ,{-1,-2},{-2,-1},{-2,1},{-1,2}  //말 점프 위쪽
+            ,{1,-2},{2,-1},{2,1},{1,2}};    //말 점프 아래쪽
 
     static class Node {
-        int x;
-        int y;
+        int r;
+        int c;
         int kNum;
         int turn;
 
-        public Node(int x, int y, int turn,int kNum) {
-            this.x = x;
-            this.y = y;
+        public Node(int r, int c, int turn, int kNum) {
+            this.r = r;
+            this.c = c;
             this.turn = turn;
             this.kNum = kNum;
         }
@@ -49,10 +49,10 @@ public class Main {
         System.out.println(result==Integer.MAX_VALUE ? -1 : result);
     }
 
-    private static void bfs(int stX, int stY) {
+    private static void bfs(int startR, int startC) {
         int[][] visitK = new int[H][W];
         Queue<Node> myQ = new LinkedList<>();
-        myQ.offer(new Node(stX, stY,0 , K));
+        myQ.offer(new Node(startR, startC,0 , K));
 
         for (int[] arr : visitK) {
             Arrays.fill(arr, -1);
@@ -62,13 +62,13 @@ public class Main {
 
         while (!myQ.isEmpty()) {
             Node node = myQ.poll();
-            int nowX = node.x;
-            int nowY = node.y;
+            int nowX = node.r;
+            int nowY = node.c;
             int nowK = node.kNum;
             int nowTurn = node.turn;
 
             if (nowX == H - 1 && nowY == W - 1) {
-                result = Math.min(result, nowTurn);
+                result = nowTurn;
                 break;
             }
 
@@ -78,7 +78,7 @@ public class Main {
 
                 if (i>3 && K<=0) break; //말 처럼 점프할 수 없는 경우
 
-                if (canGO(nextX, nextY) && arr[nextX][nextY] == 0) {
+                if (canGO(nextX, nextY) && arr[nextX][nextY] == 0) {    //canGo(배열 이탈 여부) && 길인지 여부
                     //말 처럼 움직이는 경우
                     if (i > 3) {
                         if (visitK[nextX][nextY] >= nowK -1) {  //방문하려는 곳이 더 큰 K를 가지고 방문했거나, 같은 K를 가지고 방문했다면
