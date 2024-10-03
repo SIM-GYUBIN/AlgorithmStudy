@@ -1,42 +1,34 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-class Main {
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
-   static int[] arr;
-   static int[] mem;
+        int N = Integer.parseInt(br.readLine());
 
-   public static void main(String[] args) throws Exception {
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int[] arr = new int[N];
+        int[] dp = new int[N];
+        for (int i = 0; i < N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
 
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      int N = Integer.parseInt(br.readLine());
-
-      arr = new int[N];
-      mem = new int[N];
-
-      StringTokenizer st = new StringTokenizer(br.readLine());
-      for (int i = 0; i < N; i++) {
-         int num = Integer.parseInt(st.nextToken());
-         arr[i] = num;
-      }
-
-      Arrays.fill(mem, 1);
-
-      //dp(bottom-up)
-      for (int now = 0; now < N; now++) {
-         for (int i = 0; i < now; i++) {
-            if (arr[now] > arr[i] && mem[now] < mem[i]+1 ) {
-               mem[now] = mem[i] + 1;
+        Arrays.fill(dp, 1);
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < i; j++) {
+                if (arr[i] > arr[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
             }
-         }
-      }
+        }
 
-      Arrays.sort(mem);
 
-      System.out.println(mem[N-1]);
-
-   }
+        int max = Arrays.stream(dp).max().getAsInt();
+        System.out.println(max);
+    }
 }
-
