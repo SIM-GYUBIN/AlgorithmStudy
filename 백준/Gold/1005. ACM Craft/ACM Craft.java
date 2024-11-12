@@ -6,14 +6,15 @@ import java.util.*;
 
 /**
  * 역방향 리스트로
- * 진입점(바로 지을 수 있는 애들) 들을 찾으며, 최장시간을 기록
+ * 진입점(바로 지을 수 있는 애들) 들을 찾으며
+ * 시작점에서 방문 노드로 가는 최장시간을 memo배열에 기록하며 dp 활용
+ * 
  */
 public class Main {
 
     static int N, V, RESULT;
     static List<List<Integer>> revlist;
     static int[] timeArr;
-    static int[] dp; //V에서 해당 노드까지의 거리 중 최대
     static int[] memo; // 출발지에서 해당 노드까지의 거리 중 최대
     static boolean[] visit; // 출발지에서 해당 노드까지 거리 탐색 완료된 것들
 
@@ -40,9 +41,7 @@ public class Main {
             for (int i = 0; i <= N; i++) {
                 revlist.add(new ArrayList<>());
             }
-
-//            dp = new int[N + 1];
-//            Arrays.fill(dp, -1);
+            
             visit = new boolean[N + 1];
             memo = new int[N + 1];
 
@@ -69,17 +68,10 @@ public class Main {
     private static int dfs(int num) {
 
         if (revlist.get(num).isEmpty()) {
-//            RESULT = Math.max(RESULT, sec + timeArr[num]); //손 보자
             memo[num] = timeArr[num];
             visit[num] = true;
             return timeArr[num];
         }
-
-//        if (dp[num] >= sec) {
-//            return; //갈 필요 없는뎅
-//        } else {
-//            dp[num] = sec;
-//        }
 
         if (visit[num]) {
             return memo[num];
